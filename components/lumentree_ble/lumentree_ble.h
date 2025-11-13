@@ -146,6 +146,15 @@ class LumentreeBle : public esphome::ble_client::BLEClientNode, public PollingCo
   void set_battery_capacity_setting_number(number::Number *battery_capacity_setting_number) {
     battery_capacity_setting_number_ = battery_capacity_setting_number;
   }
+  void set_password_setting_1_number(number::Number *password_setting_1_number) {
+    password_setting_1_number_ = password_setting_1_number;
+  }
+  void set_password_setting_2_number(number::Number *password_setting_2_number) {
+    password_setting_2_number_ = password_setting_2_number;
+  }
+  void set_password_setting_3_number(number::Number *password_setting_3_number) {
+    password_setting_3_number_ = password_setting_3_number;
+  }
 
   void set_ac_charging_switch(switch_::Switch *ac_charging_switch) { ac_charging_switch_ = ac_charging_switch; }
   void set_output_switch(switch_::Switch *output_switch) { output_switch_ = output_switch; }
@@ -210,6 +219,9 @@ class LumentreeBle : public esphome::ble_client::BLEClientNode, public PollingCo
   number::Number *charging_target_voltage_setting_number_;
   number::Number *float_charge_voltage_setting_number_;
   number::Number *battery_capacity_setting_number_;
+  number::Number *password_setting_1_number_;
+  number::Number *password_setting_2_number_;
+  number::Number *password_setting_3_number_;
 
   switch_::Switch *ac_charging_switch_;
   switch_::Switch *output_switch_;

@@ -29,6 +29,9 @@ CONF_EQUALIZATION_VOLTAGE_SETTING = "equalization_voltage_setting"
 CONF_CHARGING_TARGET_VOLTAGE_SETTING = "charging_target_voltage_setting"
 CONF_FLOAT_CHARGE_VOLTAGE_SETTING = "float_charge_voltage_setting"
 CONF_BATTERY_CAPACITY_SETTING = "battery_capacity_setting"
+CONF_PASSWORD_SETTING_1 = "password_setting_1"
+CONF_PASSWORD_SETTING_2 = "password_setting_2"
+CONF_PASSWORD_SETTING_3 = "password_setting_3"
 
 NUMBERS = {
     CONF_POWER_OUTPUT_SETTING: [40, 1.0, 2],
@@ -36,6 +39,9 @@ NUMBERS = {
     CONF_CHARGING_TARGET_VOLTAGE_SETTING: [102, 0.01, 2],
     CONF_FLOAT_CHARGE_VOLTAGE_SETTING: [103, 0.01, 2],
     CONF_BATTERY_CAPACITY_SETTING: [104, 1.0, 2],
+    CONF_PASSWORD_SETTING_1: [201, 1.0, 2],
+    CONF_PASSWORD_SETTING_2: [202, 1.0, 2],
+    CONF_PASSWORD_SETTING_3: [203, 1.0, 2],
 }
 
 LumentreeNumber = lumentree_ble_ns.class_(
@@ -103,6 +109,27 @@ CONFIG_SCHEMA = LUMENTREE_BLE_COMPONENT_SCHEMA.extend(
                 cv.Optional(
                     CONF_UNIT_OF_MEASUREMENT, default=UNIT_AMPERE_HOUR
                 ): cv.string_strict,
+            }
+        ),
+        cv.Optional(CONF_PASSWORD_SETTING_1): LUMENTREE_NUMBER_SCHEMA.extend(
+            {
+                cv.Optional(CONF_MIN_VALUE, default=0.0): cv.float_,
+                cv.Optional(CONF_MAX_VALUE, default=65535.0): cv.float_,
+                cv.Optional(CONF_STEP, default=1.0): cv.float_,
+            }
+        ),
+        cv.Optional(CONF_PASSWORD_SETTING_2): LUMENTREE_NUMBER_SCHEMA.extend(
+            {
+                cv.Optional(CONF_MIN_VALUE, default=0.0): cv.float_,
+                cv.Optional(CONF_MAX_VALUE, default=65535.0): cv.float_,
+                cv.Optional(CONF_STEP, default=1.0): cv.float_,
+            }
+        ),
+        cv.Optional(CONF_PASSWORD_SETTING_3): LUMENTREE_NUMBER_SCHEMA.extend(
+            {
+                cv.Optional(CONF_MIN_VALUE, default=0.0): cv.float_,
+                cv.Optional(CONF_MAX_VALUE, default=65535.0): cv.float_,
+                cv.Optional(CONF_STEP, default=1.0): cv.float_,
             }
         ),
     }

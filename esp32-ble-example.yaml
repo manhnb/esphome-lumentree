@@ -2,7 +2,7 @@ substitutions:
   name: lumentree-inverter
   device_description: "Monitor and control Lumentree solar inverter via BLE"
   external_components_source: github://syssi/esphome-lumentree@main
-  mac_address: "AA:BB:CC:DD:EE:FF"  # Replace with your inverter's MAC address
+  mac_address: "34:5F:45:C5:25:12"  # Replace with your inverter's MAC address
 
 esphome:
   name: ${name}
@@ -13,7 +13,7 @@ esphome:
     version: 1.0.0
 
 esp32:
-  board: wemos_d1_mini32
+  board: seeed_xiao_esp32c3
   framework:
     type: esp-idf
 
@@ -22,8 +22,8 @@ external_components:
     refresh: 0s
 
 wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
+  ssid: T2
+  password: luna2015
 
 ota:
   platform: esphome
@@ -50,6 +50,11 @@ logger:
     api: INFO
 
 api:
+
+mqtt:
+  broker: 192.168.0.10
+  port: 1883
+  id: lumentree_mqtt
 
 esp32_ble_tracker:
   scan_parameters:
@@ -191,3 +196,9 @@ number:
     battery_capacity_setting:
       name: "${name} battery capacity setting"
       unit_of_measurement: "Ah"
+    password_setting_1:
+      name: "${name} password setting 1"
+    password_setting_2:
+      name: "${name} password setting 2"
+    password_setting_3:
+      name: "${name} password setting 3"
