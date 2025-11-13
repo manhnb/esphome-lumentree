@@ -27,6 +27,7 @@ class LumentreeBle : public esphome::ble_client::BLEClientNode, public PollingCo
     REQUEST_BATTERY_CONFIG,
     REQUEST_SYSTEM_CONTROL,
     REQUEST_DAILY_STATISTICS,
+    REQUEST_PASSWORD_SETTINGS,
     REQUEST_COMPLETE
   };
 
@@ -239,6 +240,7 @@ class LumentreeBle : public esphome::ble_client::BLEClientNode, public PollingCo
   void decode_battery_config_registers_(const std::vector<uint8_t> &data);
   void decode_system_control_registers_(const std::vector<uint8_t> &data);
   void decode_daily_statistics_registers_(const std::vector<uint8_t> &data);
+  void decode_password_settings_registers_(const std::vector<uint8_t> &data);
   void publish_state_(binary_sensor::BinarySensor *binary_sensor, const bool &state);
   void publish_state_(sensor::Sensor *sensor, float value);
   void publish_state_(text_sensor::TextSensor *text_sensor, const std::string &state);

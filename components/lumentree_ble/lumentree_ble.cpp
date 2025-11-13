@@ -284,6 +284,9 @@ void LumentreeBle::decode_(const std::vector<uint8_t> &data) {
     case REQUEST_DAILY_STATISTICS:
       this->decode_daily_statistics_registers_(data);
       break;
+    case REQUEST_PASSWORD_SETTINGS:
+      this->decode_password_settings_registers_(data);
+      break;
     default:
       ESP_LOGW(TAG, "Unknown request type: %d", this->current_request_type_);
       break;
@@ -633,6 +636,10 @@ void LumentreeBle::send_next_request_() {
       ESP_LOGI(TAG, "Requesting Daily Statistics registers (0-7)");
       this->read_registers(LUMENTREE_MODBUS_FUNCTION_READ_INPUT, 0, 8);
       break;
+    case REQUEST_PASSWORD_SETTINGS:
+      ESP_LOGI(TAG, "Requesting Password Settings registers (201-203)");
+      this->read_registers(LUMENTREE_MODBUS_FUNCTION_READ, 201, 3);
+      break;
     case REQUEST_COMPLETE:
       ESP_LOGI(TAG, "All register requests completed");
       break;
@@ -726,6 +733,37 @@ void LumentreeBle::decode_daily_statistics_registers_(const std::vector<uint8_t>
         break;
       default:
         ESP_LOGVV(TAG, "Daily Statistics Register %d: 0x%04X (%d)", register_index, register_value, register_value);
+        break;
+    }
+  }
+}
+
+void LumentreeBle::decode_password_settings_registers_(const std::vector<uint8_t> &data) {
+  auto lumentree_get_16bit = [&](size_t i) -> uint16_t {
+    return (uint16_t(data[i + 0]) << 8) | (uint16_t(data[i + 1]) << 0);
+  };
+
+  uint8_t byte_count = data[2];
+  ESP_LOGI(TAG, "Decoding Password Settings registers (201-203)");
+
+  // Register offsets in the data array (3 bytes header + register_index * 2)
+  // Note: For registers 201-203, we need to offset by 201 to get the correct register address
+  for (uint8_t i = 0; i < byte_count / 2; i++) {
+    uint16_t register_value = lumentree_get_16bit(3 + i * 2);
+    uint8_t register_address = 201 + i;  // Actual register address
+
+    switch (register_address) {
+      case 201:  // Password Setting 1
+        ESP_LOGI(TAG, "Password Setting 1: %d", register_value);
+        break;
+      case 202:  // Password Setting 2
+        ESP_LOGI(TAG, "Password Setting 2: %d", register_value);
+        break;
+      case 203:  // Password Setting 3
+        ESP_LOGI(TAG, "Password Setting 3: %d", register_value);
+        break;
+      default:
+        ESP_LOGVV(TAG, "Password Settings Register %d: 0x%04X (%d)", register_address, register_value, register_value);
         break;
     }
   }
