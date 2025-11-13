@@ -1,7 +1,7 @@
 substitutions:
   name: lumentree-inverter
   device_description: "Monitor and control Lumentree solar inverter via BLE"
-  external_components_source: github://syssi/esphome-lumentree@main
+  external_components_source: github://manhnb/esphome-lumentree@main
   mac_address: "34:5F:45:C5:25:12"  # Replace with your inverter's MAC address
 
 esphome:
